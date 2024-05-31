@@ -10,10 +10,7 @@ import org.springframework.boot.autoconfigure.web.format.DateTimeFormatters;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Principal {
@@ -64,7 +61,11 @@ public class Principal {
         System.out.println("Top 5 episodios");
         datosEpisodios.stream()
                 .filter(e -> !e.evaluacion().equalsIgnoreCase("N/A"))
+                .peek(e -> System.out.println("Primer filtro (N/A)" + e))
                 .sorted(Comparator.comparing(DatosEpisodio::evaluacion).reversed())
+                .peek(e -> System.out.println("Segunda ordenaciòn (M>m)" + e))
+                .map(e -> e.titulo().toUpperCase())
+                .peek(e -> System.out.println("Tercer filtro Mayùscula (m>M)" + e))
                 .limit(5)
                 .forEach(System.out::println);
 
@@ -74,7 +75,7 @@ public class Principal {
                         .map(d -> new Episodio(t.numero(),d)))
                 .collect(Collectors.toList());
 
-        episodios.forEach(System.out::println);
+        //episodios.forEach(System.out::println);
 
 
         // Busqueda de episodios por x año
@@ -86,12 +87,12 @@ public class Principal {
         LocalDate fechaBusqueda = LocalDate.of(fecha, 1,1);
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        episodios.stream()
+        /*episodios.stream()
                 .filter(e -> e.getFechaDeLanxzamiento() != null && e.getFechaDeLanxzamiento().isAfter(fechaBusqueda))
                 .forEach(e -> System.out.println(
                    "Temporada: " + e.getTemporada() +
                            "Episodio: " + e.getTitulo() +
                            "Fecha de lanzamiento: " + e.getFechaDeLanxzamiento().format(dtf)
-                ));
+                ));*/
     }
 }
