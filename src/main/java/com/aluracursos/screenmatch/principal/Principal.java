@@ -58,7 +58,7 @@ public class Principal {
 
 
         //Top 5 episodios
-        System.out.println("Top 5 episodios");
+        /*System.out.println("Top 5 episodios");
         datosEpisodios.stream()
                 .filter(e -> !e.evaluacion().equalsIgnoreCase("N/A"))
                 .peek(e -> System.out.println("Primer filtro (N/A)" + e))
@@ -67,7 +67,7 @@ public class Principal {
                 .map(e -> e.titulo().toUpperCase())
                 .peek(e -> System.out.println("Tercer filtro Mayùscula (m>M)" + e))
                 .limit(5)
-                .forEach(System.out::println);
+                .forEach(System.out::println);*/
 
         //Convirtiendo los datos a una lista del tipo episodios
         List<Episodio> episodios = temporadas.stream()
@@ -79,12 +79,12 @@ public class Principal {
 
 
         // Busqueda de episodios por x año
-        System.out.println("Indica el año a partir del cual deseas ver los episodios:");
+        /*System.out.println("Indica el año a partir del cual deseas ver los episodios:");
         var fecha = teclado.nextInt();
-        teclado.nextLine();
+        teclado.nextLine();*/
 
 
-        LocalDate fechaBusqueda = LocalDate.of(fecha, 1,1);
+        //LocalDate fechaBusqueda = LocalDate.of(fecha, 1, 1);
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         /*episodios.stream()
@@ -94,5 +94,19 @@ public class Principal {
                            "Episodio: " + e.getTitulo() +
                            "Fecha de lanzamiento: " + e.getFechaDeLanxzamiento().format(dtf)
                 ));*/
+
+        //Busca episodio por parte del titulo
+
+        System.out.println("Escribe el titulo que deseas ver: ");
+        var parteTitulo = teclado.nextLine();
+        Optional<Episodio> episodioBuscado = episodios.stream()
+                .filter(e -> e.getTitulo().toUpperCase().contains(parteTitulo.toUpperCase()))
+                .findFirst();
+        if (episodioBuscado.isPresent()){
+            System.out.println("Episodio encontrado");
+            System.out.println("los datos son: " + episodioBuscado.get());
+        }else {
+            System.out.println("Episodio no encontrado");
+        }
     }
 }
